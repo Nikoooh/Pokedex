@@ -1,0 +1,49 @@
+.pokemonCard {
+    margin: auto;
+    margin: 38px;
+    border: 1px solid rgba(212, 199, 199, 0.4);
+    border-radius: 8px;
+    height: 74vh;
+}
+
+.pokemon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 200px;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.pokemonName {
+    padding: 20px;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.columnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+.pokeSprite {
+    width: 320px;
+    height: 350px;
+}
+
+.pokemonStatsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pokemonInfoHeader {
+    text-align: center;
+}
+
+.pokemonInfo {
+    text-align: left;
+}

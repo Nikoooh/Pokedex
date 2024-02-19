@@ -1,0 +1,54 @@
+.pokemonCardEmpty {
+    margin: 18px;
+    border: 1px solid rgba(212, 199, 199, 0.4);
+    border-radius: 8px;
+    height: 74vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.errorMessage {
+    opacity: 0.8;
+    color: rgb(204, 204, 204);
+    font-size: 3rem;
+}
+
+.errorMessage:hover {
+   cursor: default;
+}
+
+.openSearchBtn {
+    border: 0;
+    border-radius: 4px;
+    height: 100%;
+    width: 27%;
+    font-size: 1.4rem;
+    transition: font-size 0.5s ease;
+    background-color: rgb(96, 159, 218);
+    color: white;
+}
+
+.openSearchBtn:hover {
+    border: 0;
+    font-size: 1.42rem;
+    cursor: pointer;
+}
+
+.pokemonSearchBar {
+    border: 0;
+    border-bottom: 1px solid rgba(141, 141, 141, 0.7);
+    border-radius: 4px;
+    padding: 5px;
+    height: 100%;
+    width: 35%;
+}
+
+.searchWrapper {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
