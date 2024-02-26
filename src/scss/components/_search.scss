@@ -1,0 +1,42 @@
+.openSearchBtn {
+    border: 0;
+    border-radius: 4px;
+    height: 100%;
+    width: 35%;
+    font-size: 1.4rem;
+    transition: font-size 0.5s ease;
+    background-color: rgb(96, 159, 218);
+    color: white;
+}
+
+.openSearchBtn:hover {
+    border: 0;
+    font-size: 1.41rem;
+    cursor: pointer;
+}
+
+.pokemonSearchBar {
+    border: 0;
+    border-bottom: 1px solid rgba(141, 141, 141, 0.7);
+    border-radius: 4px;
+    padding: 5px;
+    height: 100%;
+    width: 40%;
+}
+
+.compareSearchItems {
+    height: 50px;
+    width: 80%;
+}
+
+.searchWrapper {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.compareSearchWrapper {
+    align-items: center;
+}

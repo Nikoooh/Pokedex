@@ -1,58 +1,46 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import { PokedexContext } from '../../../context/pokedexContext'
-import { Backdrop, CircularProgress } from '@mui/material'
 
 const EmptyPokemonCard = () => {
 
-    const { searchOpen, setSearchOpen, setPokemon } = useContext(PokedexContext)
-    const [error, setError] = useState({error: false, message: ""})
+    const { error, selector, setComparePokemon, comparePokemon } = useContext(PokedexContext)
     const formRef = useRef()
 
-    const handleSearch = async (e) => {  
+    const selected = (selector === "compare")
+    const width = {
+        width: selected ? "50%" : null
+    }
+
+    const handleSearch = async (e) => {
         e.preventDefault()
-        setSearchOpen(true)
 
-        try {   
-            const hakusana = formRef.current.pokemonSearchInput.value
-            const yhteys = await fetch(`https://pokeapi.co/api/v2/pokemon/${hakusana}`)
-
-            if (yhteys.status === 200) {
-                let pokemon = await yhteys.json()
-
-                setPokemon(pokemon)
-
-                setError({error: false, message: ""})
-                setSearchOpen(false)
-            } else {
-                switch (yhteys.status) {
-                    case 404:
-                        setError({error: true, message: <h1 className="errorMessage"> no pokemon found <br/> try a different search </h1>})
-                }
-
-                setSearchOpen(false)
-            }                    
+        try {
+            let hakusana = formRef.current.pokemonInput.value
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${hakusana}`)
+            if (response.status === 200) {
+                let pokemon = await response.json()
+                console.log(comparePokemon);
+                setComparePokemon(pokemon)             
+            }
         } catch (error) {
             console.log(error);
-            setSearchOpen(false)
         }
-       
     }
 
     return (    
-        <div className="pokemonCardEmpty">
-            <form ref={formRef} onSubmit={handleSearch}>
-                <div className='searchWrapper'>         
-                    <input className='pokemonSearchBar' name='pokemonSearchInput' placeholder='Search pokemon'/>        
-                    <button className="openSearchBtn" type='submit'>
-                        <p>Search for pokemon</p>
-                    </button>                                       
-                </div>
-            </form>      
+        <div className="pokemonCardEmpty" style={width}>     
             <div>{error.message}</div>
+            {(selected) ?
+                <div className='columnContainer compareSearchWrapper'> 
+                    <form ref={formRef} onSubmit={handleSearch}>
+                        <input name='pokemonInput' className='pokemonSearchBar compareSearchItems' placeholder='compare'/>
+                        <button className='openSearchBtn compareSearchItems' onClick={handleSearch}>Search</button>
+                    </form>
+                </div>
+            : 
+                null
+            }
             <p></p>  
-            <Backdrop open={searchOpen} onClick={() => setSearchOpen(false)}>
-                <CircularProgress color='inherit'/>
-            </Backdrop>
         </div>
     )
 }

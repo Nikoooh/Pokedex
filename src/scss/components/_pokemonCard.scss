@@ -1,18 +1,18 @@
 .pokemonCard {
-    margin: auto;
     margin: 38px;
     border: 1px solid rgba(212, 199, 199, 0.4);
     border-radius: 8px;
-    height: 74vh;
+    height: 100%;
+    padding-bottom: 25px;
 }
 
 .pokemon {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 200px;
+    gap: 5vw;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .pokemonName {
@@ -25,12 +25,35 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 40px;
+    gap: 3vh;
+}
+
+.rowContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.imgVariantBtn {
+    border: 1px solid rgba(212, 199, 199, 0.2);
+    width: 13vw;
+    height: 50px;
+    font-size: 1.3rem;
+    transition: font-size 0.3s ease;
+}
+
+.imgVariantBtn:hover {
+    cursor: pointer;
+    font-size: 1.32rem;
+}
+
+.imgContainer {
+    width: 20vw;
 }
 
 .pokeSprite {
-    width: 320px;
-    height: 350px;
+    width: 18vw;
+    height: auto;
 }
 
 .pokemonStatsContainer {
@@ -46,4 +69,47 @@
 
 .pokemonInfo {
     text-align: left;
+    width: 20vw;
+}
+
+.classLine {
+    border-bottom: 1px solid rgba(212, 199, 199, 0.8);
+    padding: 5px;
+    display: flex;
+    width: 100%;
+}
+
+.spaceBetween {
+    justify-content: space-between;
+}
+
+.divider {
+    border: 1px solid rgba(212, 199, 199, 0.8);
+}
+
+.abilityInfo-container {
+    border: 1px solid rgb(212, 212, 212);
+    background-color: rgb(212, 212, 212);
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    margin-left: 15px;
+}
+
+.abilityQuestionMarker {
+    color: blue;
+}
+
+.abilityInfo-container:hover {
+    cursor: pointer;
+}
+
+.compareCardWidth {
+    width: 50%;
+    height: 74vh;
+}
+
+.compareCardHeader {
+    
 }

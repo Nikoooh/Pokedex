@@ -10,15 +10,3 @@ export const Navbar = () => {
         </div>
     )
 }
-
-export const Footer = () => {
-    return (
-        <div className="footer">
-            <div className="footerText">
-                <h3>
-                    FOOTER
-                </h3>               
-            </div>          
-        </div>
-    )
-}
