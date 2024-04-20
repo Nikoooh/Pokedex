@@ -72,10 +72,10 @@ const PokemonCard = ({ currPokemon }) => {
                                 return (
                                     <div className="classLine spaceBetween" key={idx}>
                                         {(selector === 'search') ?
-                                            <div>
+                                            <>
                                                 <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p>
                                                 <span>{currPokemon.stats[idx].base_stat}</span>
-                                            </div>
+                                            </>
                                         :
                                             (comparePokemon) ?
                                                 (currPokemon === pokemon) ?
@@ -165,7 +165,7 @@ const PokemonCard = ({ currPokemon }) => {
                 
                 {(selector === "search") ?
                     <>
-                        <div className='divider'></div>
+                        <div className='divider' />
 
                         <div className='imgContainer columContainer'>
                             <div className='rowContainer'>
