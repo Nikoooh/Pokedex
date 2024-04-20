@@ -18,7 +18,7 @@ const Wrapper = () => {
             {(selector === "compare") 
             ?   <PokemonCompare />
             :   (pokemon) 
-                ?   <PokemonCard pokemon={pokemon}/>
+                ?   <PokemonCard currPokemon={pokemon}/>
                 :   <EmptyPokemonCard />        
             }
         </div>

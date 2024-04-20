@@ -2,12 +2,12 @@ import React, { useContext, useState, useEffect } from 'react'
 import { PokedexContext } from '../../../context/pokedexContext'
 import { Popover } from '@mui/material'
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ currPokemon }) => {
 
-    const { selector } = useContext(PokedexContext)
+    const { selector, comparePokemon, pokemon, setPokemon, setComparePokemon } = useContext(PokedexContext)
     const [shiny, setShiny] = useState(false)
     const [abilities, setAbilities] = useState()
-    const [popOverAnchor, setPopOverAnchors] = useState(Array(pokemon.abilities.length).fill(null));
+    const [popOverAnchor, setPopOverAnchors] = useState(Array(currPokemon.abilities.length).fill(null));
 
     const handlePopover = (e, idx) => {       
         setPopOverAnchors((anchors) => {
@@ -18,13 +18,22 @@ const PokemonCard = ({ pokemon }) => {
     };
 
     const handleClose = () => {
-        setPopOverAnchors(Array(pokemon.abilities.length).fill(null));
+        setPopOverAnchors(Array(currPokemon.abilities.length).fill(null));
     };
+
+    const handlePokemonClose = () => {
+        if (currPokemon === pokemon) {
+            setPokemon(comparePokemon)
+            setComparePokemon(null)
+        } else {
+            setComparePokemon(null)
+        }
+    }
 
     useEffect(() => {
         const fetchAbilities = async () => {
           const abilitiesData = await Promise.all(
-            pokemon.abilities.map(async (ability) => {
+            currPokemon.abilities.map(async (ability) => {
               const response = await fetch(ability.ability.url);
               if (response.status === 200) {
                 return response.json();
@@ -37,12 +46,19 @@ const PokemonCard = ({ pokemon }) => {
         };
     
         fetchAbilities();
-    }, [pokemon]);
+    }, [currPokemon]);
 
     return (
         <div className={(selector === 'compare') ? 'compareCardWidth pokemonCard' : 'pokemonCard'}>
-            <div className='pokemonName'>
-                <h5>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h5>
+            <div className='closeBtnContainer'>
+                <button className='closeBtn' onClick={handlePokemonClose}>
+                    <h3>X</h3>
+                </button>
+            </div>
+           
+
+            <div className='pokemonName rowContainer'>
+                <h5>{currPokemon.name.charAt(0).toUpperCase() + currPokemon.name.slice(1)}</h5>
             </div>
             
             <div className='pokemon'>
@@ -52,10 +68,40 @@ const PokemonCard = ({ pokemon }) => {
                             <h2>Stats</h2>
                         </div>
                         <div className='pokemonInfo'>
-                            {(pokemon.stats.map((stat, idx) => {
+                            {(currPokemon.stats.map((stat, idx) => {
                                 return (
                                     <div className="classLine spaceBetween" key={idx}>
-                                        <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p><p className='statValue'>{stat.base_stat}</p>                                     
+                                        {(selector === 'search') ?
+                                            <div>
+                                                <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p>
+                                                <span>{currPokemon.stats[idx].base_stat}</span>
+                                            </div>
+                                        :
+                                            (comparePokemon) ?
+                                                (currPokemon === pokemon) ?
+                                                    <>
+                                                        <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p>
+                                                        <span>
+                                                            <span>{currPokemon.stats[idx].base_stat}</span>
+                                                            <span style={{marginLeft: '5px', color: pokemon.stats[idx].base_stat > comparePokemon.stats[idx].base_stat ? 'green' : 'red'}}>({pokemon.stats[idx].base_stat > comparePokemon.stats[idx].base_stat ? '+' : '-'}{Math.abs(pokemon.stats[idx].base_stat - comparePokemon.stats[idx].base_stat)})</span>
+                                                        </span>     
+                                                    </> 
+                                                :
+                                                    <>
+                                                        <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p>
+                                                        <span>
+                                                            <span>{currPokemon.stats[idx].base_stat}</span>
+                                                            <span style={{marginLeft: '5px', color: comparePokemon.stats[idx].base_stat > pokemon.stats[idx].base_stat ? 'green' : 'red'}}>
+                                                                ({comparePokemon.stats[idx].base_stat > pokemon.stats[idx].base_stat ? '+' : '-'}{Math.abs(pokemon.stats[idx].base_stat - comparePokemon.stats[idx].base_stat)})
+                                                            </span>
+                                                        </span>     
+                                                    </> 
+                                            :
+                                                <>
+                                                    <p>{stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}:</p>
+                                                    <span>{currPokemon.stats[idx].base_stat}</span>
+                                                </>                                                
+                                        }                                                                    
                                     </div>
                                 )
                             }))}  
@@ -67,7 +113,7 @@ const PokemonCard = ({ pokemon }) => {
                             <h2>Types</h2>
                         </div>
                         <div className='pokemonInfo'>
-                            {(pokemon.types.map((type, idx) => {
+                            {(currPokemon.types.map((type, idx) => {
                                 return (
                                     <div className="classLine"  key={idx}>
                                         <p>{type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}</p> 
@@ -82,7 +128,7 @@ const PokemonCard = ({ pokemon }) => {
                             <h2>Abilities</h2>
                         </div>
                         <div className='pokemonInfo'>
-                            {(pokemon.abilities.map((ability, idx) => {
+                            {(currPokemon.abilities.map((ability, idx) => {
                                 return (                                   
                                     <div className="classLine" key={idx}>                               
                                         <p>{ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)}</p>
@@ -130,7 +176,7 @@ const PokemonCard = ({ pokemon }) => {
                                     <button className={`imgVariantBtn ${(shiny) ? 'selected' : null}`} onClick={() => setShiny(true)}>Shiny</button>
                                 </div>
                             </div>
-                            <img className='pokeSprite' src={(shiny) ? pokemon.sprites.front_shiny : pokemon.sprites.front_default}></img>                 
+                            <img className='pokeSprite' src={(shiny) ? currPokemon.sprites.front_shiny : currPokemon.sprites.front_default}></img>                 
                         </div>
                     </>
                 :   

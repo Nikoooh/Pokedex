@@ -22,11 +22,12 @@
 }
 
 .pokedex-container {
-    width: 63vw;
+    width: 70vw;
     height: 100vh;
     position: relative;
     background-color: rgb(240, 245, 247);
     margin: auto;
     box-shadow: 35px 0 25px rgba(0, 0, 0, 0.1), -35px 0 25px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    overflow: scroll;
 }

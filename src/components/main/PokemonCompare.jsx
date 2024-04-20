@@ -7,21 +7,19 @@ const PokemonCompare = () => {
 
     const { pokemon, comparePokemon } = useContext(PokedexContext)
 
+    if (!pokemon && !comparePokemon) return <div className='pokemonCardEmpty' />
+
     return (
         <div>
-            {(pokemon) ?
-                <div className='rowContainer' style={{marginTop: "38px"}}>
-                    <PokemonCard pokemon={pokemon} />
-                    <div className='divider'/>
-                    {(comparePokemon) ?
-                        <PokemonCard pokemon={comparePokemon} />
-                    :                   
-                        <EmptyPokemonCard />                      
-                    }                 
-                </div>
-            :
-                null
-            }
+            <div className='rowContainer' style={{marginTop: "38px"}}>
+                <PokemonCard currPokemon={pokemon} />
+                <div className='divider'/>
+                {(comparePokemon) ?
+                    <PokemonCard currPokemon={comparePokemon} />
+                :                   
+                    <EmptyPokemonCard />                      
+                }                 
+            </div>
         </div>
     )
 }
